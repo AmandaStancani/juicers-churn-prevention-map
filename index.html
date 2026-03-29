@@ -7,142 +7,225 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f7f4; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 2rem 1rem; }
-  h1 { font-size: 20px; font-weight: 500; color: #1a1a18; margin-bottom: 0.25rem; }
+  h1 { font-size: 20px; font-weight: 600; color: #1a1a18; margin-bottom: 0.25rem; }
   p.sub { font-size: 14px; color: #6b6b66; margin-bottom: 2rem; }
   .solar-wrap { width: 100%; max-width: 720px; }
   svg { display: block; width: 100%; }
   .planet { cursor: pointer; }
   .planet circle { transition: opacity 0.15s; }
-  .planet:hover circle { opacity: 0.85; }
+  .planet:hover circle { opacity: 0.8; }
   .orbit-ring { fill: none; stroke: #c8c6bc; stroke-width: 0.5; stroke-dasharray: 4 4; }
+  .back-btn { font-size: 12px; padding: 6px 14px; border: 1px solid #d0cec6; border-radius: 7px; background: #fff; cursor: pointer; color: #555; margin: 0 0 8px; display: none; }
+  .back-btn.visible { display: inline-block; }
+  .legend { display: flex; gap: 16px; margin: 12px 0 0; justify-content: center; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #6b6b66; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
   .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 100; align-items: center; justify-content: center; }
   .overlay.open { display: flex; }
-  .modal { background: #fff; border-radius: 14px; border: 1px solid #e0ded6; padding: 1.5rem; max-width: 360px; width: 90%; }
-  .modal h2 { font-size: 17px; font-weight: 500; color: #1a1a18; margin-bottom: 8px; }
-  .modal p { font-size: 14px; color: #555550; line-height: 1.6; margin-bottom: 1.25rem; }
-  .btn-close { font-size: 13px; padding: 7px 16px; border: 1px solid #d0cec6; border-radius: 8px; background: none; cursor: pointer; color: #555; }
+  .modal { background: #fff; border-radius: 14px; border: 1px solid #e0ded6; padding: 1.5rem; max-width: 380px; width: 90%; }
+  .modal h2 { font-size: 16px; font-weight: 600; color: #1a1a18; margin-bottom: 6px; }
+  .modal .status-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 12px; font-weight: 500; }
+  .modal p { font-size: 13px; color: #555550; line-height: 1.6; margin-bottom: 8px; }
+  .modal .label { font-size: 11px; font-weight: 600; color: #9a9990; text-transform: uppercase; letter-spacing: 0.05em; margin: 12px 0 4px; }
+  .btn-close { font-size: 13px; padding: 7px 16px; border: 1px solid #d0cec6; border-radius: 8px; background: none; cursor: pointer; color: #555; margin-top: 1rem; }
   .btn-close:hover { background: #f1efe8; }
-  .hint { font-size: 12px; color: #9a9990; margin-top: 1rem; }
+  .hint { font-size: 12px; color: #9a9990; margin-top: 0.5rem; }
 </style>
 </head>
 <body>
-<h1>Churn prevention map</h1>
-<p class="sub">Click any planet to learn more about that task.</p>
+<h1>Churn Prevention Map</h1>
+<p class="sub">Click any planet to learn more. Click Checkins to explore each type.</p>
+
 <div class="solar-wrap">
-<svg viewBox="0 0 680 600">
-  <ellipse class="orbit-ring" cx="340" cy="300" rx="120" ry="120"/>
-  <ellipse class="orbit-ring" cx="340" cy="300" rx="230" ry="200"/>
-  <circle cx="340" cy="300" r="90" fill="#FAC775" opacity="0.15"/>
-  <circle cx="340" cy="300" r="72" fill="#FAC775" stroke="#EF9F27" stroke-width="0.5"/>
-  <text font-family="-apple-system,sans-serif" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" x="340" y="294">Churn</text>
-  <text font-family="-apple-system,sans-serif" font-size="13" font-weight="500" fill="#633806" text-anchor="middle" x="340" y="311">Prevention</text>
-  <g class="planet" onclick="openModal(0)" transform="translate(340,180)">
-    <circle r="36" fill="#CECBF6" stroke="#534AB7" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#3C3489" text-anchor="middle" y="-4">Health</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#3C3489" text-anchor="middle" y="10">scoring</text>
+<button class="back-btn" id="backBtn" onclick="goBack()">← Back to overview</button>
+<svg viewBox="0 0 680 560">
+  <ellipse class="orbit-ring" cx="340" cy="280" rx="115" ry="115"/>
+  <ellipse class="orbit-ring" cx="340" cy="280" rx="220" ry="190"/>
+  <circle cx="340" cy="280" r="85" fill="#378ADD" opacity="0.15"/>
+  <circle cx="340" cy="280" r="68" fill="#B5D4F4" stroke="#185FA5" stroke-width="1"/>
+  <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#0C447C" text-anchor="middle" x="340" y="270">Churn</text>
+  <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#0C447C" text-anchor="middle" x="340" y="285">Prevention</text>
+  <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#185FA5" text-anchor="middle" x="340" y="300">Goal</text>
+
+  <!-- LEVEL 1 -->
+  <g id="level1">
+    <g class="planet" onclick="drillDown()" transform="translate(340,165)">
+      <circle r="42" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">Checkins</text>
+      <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B45309" text-anchor="middle" y="10">manual</text>
+    </g>
+    <g class="planet" onclick="openModal('monitoring')" transform="translate(448,255)">
+      <circle r="42" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#92400E" text-anchor="middle" y="-12">Account</text>
+      <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#92400E" text-anchor="middle" y="3">monitoring</text>
+      <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B45309" text-anchor="middle" y="18">manual</text>
+    </g>
+    <g class="planet" onclick="openModal('webinars')" transform="translate(510,130)">
+      <circle r="42" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-5">Webinars</text>
+      <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B91C1C" text-anchor="middle" y="10">not yet</text>
+    </g>
+    <g class="planet" onclick="openModal('workshops')" transform="translate(555,300)">
+      <circle r="42" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-5">Workshops</text>
+      <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B91C1C" text-anchor="middle" y="10">not yet</text>
+    </g>
   </g>
-  <g class="planet" onclick="openModal(1)" transform="translate(450,265)">
-    <circle r="36" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#085041" text-anchor="middle" y="-4">Onboarding</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#085041" text-anchor="middle" y="10">optimization</text>
-  </g>
-  <g class="planet" onclick="openModal(2)" transform="translate(390,405)">
-    <circle r="36" fill="#F5C4B3" stroke="#993C1D" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#4A1B0C" text-anchor="middle" y="-4">Proactive</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#4A1B0C" text-anchor="middle" y="10">support</text>
-  </g>
-  <g class="planet" onclick="openModal(3)" transform="translate(230,390)">
-    <circle r="36" fill="#B5D4F4" stroke="#185FA5" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#0C447C" text-anchor="middle" y="-4">Feature</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#0C447C" text-anchor="middle" y="10">engagement</text>
-  </g>
-  <g class="planet" onclick="openModal(4)" transform="translate(230,255)">
-    <circle r="36" fill="#F4C0D1" stroke="#993556" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#4B1528" text-anchor="middle" y="-4">NPS &amp;</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#4B1528" text-anchor="middle" y="10">surveys</text>
-  </g>
-  <g class="planet" onclick="openModal(5)" transform="translate(340,90)">
-    <circle r="40" fill="#C0DD97" stroke="#3B6D11" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#173404" text-anchor="middle" y="-4">Renewal</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#173404" text-anchor="middle" y="10">campaigns</text>
-  </g>
-  <g class="planet" onclick="openModal(6)" transform="translate(530,160)">
-    <circle r="40" fill="#FAC775" stroke="#854F0B" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#412402" text-anchor="middle" y="-4">At-risk</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#412402" text-anchor="middle" y="10">outreach</text>
-  </g>
-  <g class="planet" onclick="openModal(7)" transform="translate(570,350)">
-    <circle r="40" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#26215C" text-anchor="middle" y="-4">Pricing &amp;</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#26215C" text-anchor="middle" y="10">plans</text>
-  </g>
-  <g class="planet" onclick="openModal(8)" transform="translate(440,495)">
-    <circle r="40" fill="#F7C1C1" stroke="#A32D2D" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#501313" text-anchor="middle" y="-4">Win-back</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#501313" text-anchor="middle" y="10">programs</text>
-  </g>
-  <g class="planet" onclick="openModal(9)" transform="translate(200,500)">
-    <circle r="40" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#04342C" text-anchor="middle" y="-4">Data &amp;</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#04342C" text-anchor="middle" y="10">analytics</text>
-  </g>
-  <g class="planet" onclick="openModal(10)" transform="translate(110,350)">
-    <circle r="40" fill="#FBEAF0" stroke="#993556" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#4B1528" text-anchor="middle" y="-4">CSM</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#4B1528" text-anchor="middle" y="10">touchpoints</text>
-  </g>
-  <g class="planet" onclick="openModal(11)" transform="translate(140,160)">
-    <circle r="40" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#4A1B0C" text-anchor="middle" y="-4">Competitor</text>
-    <text font-family="-apple-system,sans-serif" font-size="11" font-weight="500" fill="#4A1B0C" text-anchor="middle" y="10">intel</text>
+
+  <!-- LEVEL 2: Checkins drill-down -->
+  <!--
+    HOW TO ADD A NEW CHECKIN TYPE:
+    1. Copy a <g class="planet"> block below
+    2. Change onclick index to match new entry in tasks object
+    3. Change transform="translate(X,Y)" to a free position
+    4. Update the text labels
+  -->
+  <g id="level2-checkins" style="display:none">
+    <g class="planet" onclick="openModal('educational')" transform="translate(340,155)">
+      <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">Educational</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="8">Call</text>
+    </g>
+    <g class="planet" onclick="openModal('onboarding')" transform="translate(455,230)">
+      <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="4">Onboarding</text>
+    </g>
+    <g class="planet" onclick="openModal('monthly')" transform="translate(420,375)">
+      <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">First monthly</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="8">check-in</text>
+    </g>
+    <g class="planet" onclick="openModal('quarterly')" transform="translate(240,375)">
+      <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">Quarterly</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="8">check-in</text>
+    </g>
+    <g class="planet" onclick="openModal('monitoring')" transform="translate(225,230)">
+      <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">Account</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="8">monitoring</text>
+    </g>
   </g>
 </svg>
 </div>
-<p class="hint">Inner orbit = core daily tasks &nbsp;|&nbsp; Outer orbit = strategic &amp; recovery tasks</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#D97706;"></div> exists but manual</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#DC2626;"></div> doesn't exist yet</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#16A34A;"></div> works well</div>
+</div>
+<p class="hint" style="text-align:center">Click Checkins to explore each type</p>
+
 <div class="overlay" id="overlay" onclick="closeModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
     <h2 id="modal-title"></h2>
-    <p id="modal-desc"></p>
+    <div class="status-badge" id="modal-badge"></div>
+    <div class="label">Current process</div>
+    <p id="modal-process"></p>
+    <div id="modal-problem-wrap">
+      <div class="label">Problem</div>
+      <p id="modal-problem"></p>
+    </div>
     <button class="btn-close" onclick="closeModal()">Close</button>
   </div>
 </div>
+
 <script>
 /*
-  HOW TO ADD A NEW TASK
-  =====================
-  STEP 1: Add an entry to the tasks array below:
-    { title: "Task name", desc: "Description." },
+  HOW TO ADD A NEW PLANET
+  =======================
+  1. Add an entry to the tasks object below:
+     key: { title: "", status: "manual|not yet|good", process: "", problem: "" }
 
-  STEP 2: Add a planet in the SVG above. Copy any
-  existing <g class="planet"> block and change:
-    - onclick index to match your new task
-    - transform translate(X,Y) to a free orbit position
+  2. Add a <g class="planet"> block in the SVG
+     - Set onclick="openModal('your-key')"
+     - Set transform="translate(X,Y)"
+     - For status colors:
+       manual  -> fill:#FEF3C7 stroke:#D97706 text:#92400E
+       not yet -> fill:#FEE2E2 stroke:#DC2626 text:#7F1D1D
+       good    -> fill:#DCFCE7 stroke:#16A34A text:#14532D
 
-  FREE INNER ORBIT POSITIONS (r=120 from center 340,300):
-    translate(460,300)  translate(220,300)
-
-  FREE OUTER ORBIT POSITIONS (rx=230 from center 340,300):
-    translate(570,300)  translate(340,500)
+  FREE OUTER POSITIONS (cx=340,cy=280,rx=220,ry=190):
+    translate(340,90)   translate(130,280)
+    translate(340,470)  translate(200,430)
 */
-const tasks = [
-  { title: "Health scoring", desc: "Track usage signals, login frequency, and feature adoption to compute a per-customer health score. Flag accounts trending downward before they reach a critical threshold." },
-  { title: "Onboarding optimization", desc: "Map the first 30/60/90-day journey. Identify drop-off points and create guided flows, in-app tooltips, and milestone emails to help users reach their aha moment faster." },
-  { title: "Proactive support", desc: "Reach out before customers raise a ticket. Use behavioural signals to trigger support outreach, knowledge base suggestions, or a short check-in call." },
-  { title: "Feature engagement", desc: "Identify high-value features that correlate with retention. Run targeted nudges to drive adoption of those features among low-engagement accounts." },
-  { title: "NPS & surveys", desc: "Run regular NPS pulses and targeted micro-surveys. Close the loop with detractors personally within 48 hours. Use verbatims to surface recurring pain points." },
-  { title: "Renewal campaigns", desc: "Build multi-touch renewal sequences starting 90 days out. Personalise messaging based on health score, usage tier, and contract size." },
-  { title: "At-risk outreach", desc: "Create a playbook triggered when health scores dip below a threshold. Assign accounts to a CSM, offer an executive business review, or provide a tailored success plan." },
-  { title: "Pricing & plans", desc: "Audit plan-to-usage fit. Proactively move overfit customers to a better tier. Offer flexibility (pause, downgrade, annual discount) before they cancel." },
-  { title: "Win-back programs", desc: "Segment recently churned customers and run targeted re-engagement campaigns. Address the original churn reason with a concrete fix." },
-  { title: "Data & analytics", desc: "Build a unified churn dashboard. Combine product, CRM, and support data to identify leading indicators. Run cohort analysis to understand which segments churn fastest and why." },
-  { title: "CSM touchpoints", desc: "Define a structured cadence of check-ins based on account tier. Use QBRs and ad-hoc calls to strengthen relationships and surface risk early." },
-  { title: "Competitor intel", desc: "Track competitive losses and win-back patterns. Build battle cards. When a customer mentions switching, arm the team with targeted responses and differentiated value props." },
-];
-function openModal(i) {
-  document.getElementById('modal-title').textContent = tasks[i].title;
-  document.getElementById('modal-desc').textContent = tasks[i].desc;
+const tasks = {
+  educational: {
+    title: "Educational Call",
+    status: "manual",
+    process: "Manually filter accounts in Intercom to identify which ones are due for an educational call.",
+    problem: "No automated trigger or scheduling. Depends on manual daily filter review."
+  },
+  onboarding: {
+    title: "Onboarding",
+    status: "manual",
+    process: "Manually filter new accounts in Intercom to schedule onboarding calls.",
+    problem: "No automated trigger or scheduling. Depends on manual daily filter review."
+  },
+  monthly: {
+    title: "First Monthly Check-in",
+    status: "manual",
+    process: "Manually identify accounts ~30 days old using Intercom filters (cs_created_at) to schedule the first monthly check-in.",
+    problem: "No automated scheduling. Easy to miss accounts on busy days."
+  },
+  quarterly: {
+    title: "Quarterly Check-in",
+    status: "manual",
+    process: "Manually filter accounts due for a quarterly review using Intercom date filters.",
+    problem: "No automated scheduling. High risk of accounts slipping through without a touchpoint."
+  },
+  monitoring: {
+    title: "Account health monitoring",
+    status: "manual",
+    process: "Daily manual filtering in Intercom using signals: search count, user count, articles published, cname status, plan, KB usage, languages, customizations, Swifty Search/Chat usage.",
+    problem: "No automated alerts. Requires opening Intercom every day and applying filters manually to surface at-risk accounts."
+  },
+  webinars: {
+    title: "Webinars",
+    status: "not yet",
+    process: "Not currently offered.",
+    problem: "No webinar program exists yet. Opportunity to educate customers at scale and reduce churn through proactive engagement."
+  },
+  workshops: {
+    title: "Workshops",
+    status: "not yet",
+    process: "Not currently offered.",
+    problem: "No workshop program exists yet. Could drive deeper product adoption and reduce churn among at-risk segments."
+  }
+};
+
+function drillDown() {
+  document.getElementById('level1').style.display = 'none';
+  document.getElementById('level2-checkins').style.display = 'block';
+  document.getElementById('backBtn').classList.add('visible');
+}
+
+function goBack() {
+  document.getElementById('level1').style.display = 'block';
+  document.getElementById('level2-checkins').style.display = 'none';
+  document.getElementById('backBtn').classList.remove('visible');
+}
+
+function openModal(key) {
+  const d = tasks[key];
+  if (!d) return;
+  const statusColors = {
+    'manual':   { bg: '#FEF3C7', color: '#92400E', label: 'Exists — manual' },
+    'not yet':  { bg: '#FEE2E2', color: '#7F1D1D', label: "Doesn't exist yet" },
+    'good':     { bg: '#DCFCE7', color: '#14532D', label: 'Works well' }
+  };
+  const s = statusColors[d.status];
+  document.getElementById('modal-title').textContent = d.title;
+  const badge = document.getElementById('modal-badge');
+  badge.textContent = s.label;
+  badge.style.background = s.bg;
+  badge.style.color = s.color;
+  document.getElementById('modal-process').textContent = d.process;
+  document.getElementById('modal-problem').textContent = d.problem;
+  document.getElementById('modal-problem-wrap').style.display = d.status === 'good' ? 'none' : 'block';
   document.getElementById('overlay').classList.add('open');
 }
+
 function closeModal(e) {
   if (!e || e.target === document.getElementById('overlay')) {
     document.getElementById('overlay').classList.remove('open');

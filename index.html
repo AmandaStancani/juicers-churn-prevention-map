@@ -203,6 +203,10 @@
       <div class="label">Problem</div>
       <p id="modal-problem"></p>
     </div>
+    <div id="modal-intercom-wrap">
+      <div class="label">Intercom tools</div>
+      <p id="modal-intercom"></p>
+    </div>
     <button class="btn-close" onclick="closeModal()">Close</button>
   </div>
 </div>
@@ -213,91 +217,106 @@ const tasks = {
     title: "Educational Call",
     status: "manual",
     process: "Manually filter accounts in Intercom to identify which ones are due for an educational call.",
-    problem: "No automated trigger or scheduling. Depends on manual daily filter review."
+    problem: "No automated trigger or scheduling. Depends on manual daily filter review.",
+    intercom: "✅ Automatable now — Series campaign builder + Custom events + User & company segments. Set a trigger on cs_created_at to auto-surface accounts at the right time and assign a task to you."
   },
   onboarding: {
     title: "Onboarding",
     status: "manual",
     process: "Manually filter new accounts in Intercom to schedule onboarding calls.",
-    problem: "No automated trigger or scheduling. Depends on manual daily filter review."
+    problem: "No automated trigger or scheduling. Depends on manual daily filter review.",
+    intercom: "✅ Automatable now — Series campaign builder + User & company segments. Trigger an internal task or outreach message automatically when a new account is created."
   },
   monthly: {
     title: "First Monthly Check-in",
     status: "manual",
     process: "Manually identify accounts ~30 days old using Intercom filters (cs_created_at) to schedule the first monthly check-in.",
-    problem: "No automated scheduling. Easy to miss accounts on busy days."
+    problem: "No automated scheduling. Easy to miss accounts on busy days.",
+    intercom: "✅ Automatable now — Series campaign builder + Custom events. Watch cs_created_at and trigger a task or message automatically at day 30. No more manual date tracking."
   },
   quarterly: {
     title: "Quarterly Check-in",
     status: "manual",
     process: "Manually filter accounts due for a quarterly review using Intercom date filters.",
-    problem: "No automated scheduling. High risk of accounts slipping through without a touchpoint."
+    problem: "No automated scheduling. High risk of accounts slipping through without a touchpoint.",
+    intercom: "✅ Automatable now — Series campaign builder + Custom events. Same logic as monthly — trigger at day 90 automatically. Zero accounts slip through."
   },
   monitoring: {
     title: "Account Health Monitoring",
     status: "manual",
     process: "Daily manual filtering in Intercom using signals: search count, user count, articles published, cname status, plan, KB usage, languages, customizations, Swifty Search/Chat usage.",
-    problem: "No automated alerts. Requires opening Intercom every day and applying filters manually to surface at-risk accounts."
+    problem: "No automated alerts. Requires opening Intercom every day and applying filters manually to surface at-risk accounts.",
+    intercom: "✅ Automatable now — Workflows for advanced automations + Custom events + Custom objects. Build a workflow that watches your usage signals and auto-assigns a task or sends an internal alert when an account drops below a threshold. Replaces the daily manual filter entirely."
   },
   webinars: {
     title: "Webinars",
     status: "not yet",
     process: "Not currently offered.",
-    problem: "No webinar program exists yet. Opportunity to educate customers at scale and reduce churn through proactive engagement."
+    problem: "No webinar program exists yet. Opportunity to educate customers at scale and reduce churn through proactive engagement.",
+    intercom: "📢 Intercom can promote webinars — use Chats or Banner messages to invite specific segments. Series can send reminder emails automatically before each session."
   },
   workshops: {
     title: "Workshops",
     status: "not yet",
     process: "Not currently offered.",
-    problem: "No workshop program exists yet. Could drive deeper product adoption and reduce churn among at-risk segments."
+    problem: "No workshop program exists yet. Could drive deeper product adoption and reduce churn among at-risk segments.",
+    intercom: "📢 Same as webinars — use Proactive Support messages (Chats, Banners) to invite at-risk segments identified by your health monitoring workflow."
   },
   churnAnalysis: {
     title: "Churn Analysis Tool",
     status: "paused",
     process: "Add an email domain or full email — the AI searches all Intercom conversations, analyzes reported bugs, user sentiment, and delivers an overview of why the account churned. Also analyzes a dedicated inbox where all sales/support emails are forwarded, so the AI can read those conversations too.",
-    problem: "Trial expired — needs to be migrated to a new host. Currently paused. Also, the tool only captures emails from the moment it was set up; historical emails before the tool was installed are not included yet."
+    problem: "Trial expired — needs to be migrated to a new host. Currently paused. Also, the tool only captures emails from the moment it was set up; historical emails before the tool was installed are not included yet.",
+    intercom: "🔗 Intercom is the data source — Conversation topics + Data export help feed this tool with structured conversation data once it's migrated."
   },
   reverseChurn: {
     title: "Reverse Churn Tool",
     status: "paused",
     process: "The AI scans all Intercom conversations (and emails when possible) to identify churn signals, then outputs a list of at-risk accounts with a summary of why they might cancel. The list can also be fed into the Churn Analysis Tool for deeper individual review.",
-    problem: "Only captures data from the moment the tool was set up. Historical conversations and emails prior to setup are not yet covered."
+    problem: "Only captures data from the moment the tool was set up. Historical conversations and emails prior to setup are not yet covered.",
+    intercom: "🔗 Intercom is the data source — Conversation topics + Export conversation data feed the AI. Once migrated, Webhooks can push new conversations in real-time so the tool stays current automatically."
   },
   segmentedEmails: {
     title: "Segmented Emails by Plan",
     status: "not yet",
     process: "Not yet implemented.",
-    problem: "Currently sending the same updates to everyone. Plan is to segment by plan type and usage behavior (using existing Intercom filters) and send relevant, targeted updates to each group to increase usage and reduce churn."
+    problem: "Currently sending the same updates to everyone. Plan is to segment by plan type and usage behavior (using existing Intercom filters) and send relevant, targeted updates to each group to increase usage and reduce churn.",
+    intercom: "✅ Automatable now — Email campaigns + Series campaign builder + User & company segments + A/B testing. Build one Series per plan segment, each with its own content and timing. A/B test subject lines to optimize open rates."
   },
   feedbackEmail: {
     title: "Feedback Reset Email",
     status: "manual",
     process: "Drafted email campaign asking customers: 'What's the most frustrating or limited part of your current setup?' — to be sent manually to all accounts as the first step of the segmentation strategy.",
-    problem: "Not yet sent. Once replies come in, responses will be used to segment and tailor follow-up communications per plan/behavior."
+    problem: "Not yet sent. Once replies come in, responses will be used to segment and tailor follow-up communications per plan/behavior.",
+    intercom: "✅ Ready to send now — Email campaigns handles this as a one-off blast. Replies land in your Shared Inbox. Use Conversation topics to tag responses by theme and feed insights back into your segmentation."
   },
   behavioralTriggers: {
     title: "Behavioral Trigger Emails",
     status: "not yet",
     process: "Not yet implemented.",
-    problem: "Opportunity to trigger emails based on behavior signals already available in Intercom: 0 searches, no articles published in 30 days, no customizations, missing cname. Each signal would trigger a targeted email nudge."
+    problem: "Opportunity to trigger emails based on behavior signals already available in Intercom: 0 searches, no articles published in 30 days, no customizations, missing cname. Each signal would trigger a targeted email nudge.",
+    intercom: "✅ Automatable now — Workflows for advanced automations + Custom events + Series campaign builder. Each signal (0 searches, no articles, etc.) becomes a workflow condition. When triggered, the Series sends the right email automatically."
   },
   milestoneEmails: {
     title: "Milestone Emails",
     status: "not yet",
     process: "Not yet implemented.",
-    problem: "When an account hits a milestone (first article published, cname configured, first Swifty Chat use), an automated email could celebrate it and suggest the next step — driving deeper adoption."
+    problem: "When an account hits a milestone (first article published, cname configured, first Swifty Chat use), an automated email could celebrate it and suggest the next step — driving deeper adoption.",
+    intercom: "✅ Automatable now — Custom events + Series campaign builder. Track milestones as custom events (e.g. 'first_article_published'). When the event fires, Series automatically sends the milestone email with the next suggested step."
   },
   reactivationSeq: {
     title: "Reactivation Sequence",
     status: "not yet",
     process: "Not yet implemented.",
-    problem: "Accounts older than 90 days with low usage have no dedicated re-engagement flow. A sequence of 'you haven't explored X yet' emails could recover inactive accounts before they churn."
+    problem: "Accounts older than 90 days with low usage have no dedicated re-engagement flow. A sequence of 'you haven't explored X yet' emails could recover inactive accounts before they churn.",
+    intercom: "✅ Automatable now — User & company segments + Series campaign builder + Email campaigns. Define a segment for accounts >90 days old with low usage signals. Series enrolls them automatically and sends the reactivation sequence without any manual action."
   },
   winback: {
     title: "Win-back Campaign",
     status: "not yet",
     process: "Not yet implemented.",
-    problem: "No structured process to re-engage churned accounts after they leave. Customers who churn due to temporary budget constraints or changing priorities are never contacted again — a significant recoverable revenue opportunity at the 60–90 day mark post-cancellation."
+    problem: "No structured process to re-engage churned accounts after they leave. Customers who churn due to temporary budget constraints or changing priorities are never contacted again — a significant recoverable revenue opportunity at the 60–90 day mark post-cancellation.",
+    intercom: "✅ Automatable now — Series campaign builder + Email campaigns + User & company segments. When an account is tagged as churned, a Series starts automatically: silence for 60 days, then a personal-feeling email at day 60, another at day 90. Runs entirely without manual intervention."
   }
 };
 
@@ -346,6 +365,8 @@ function openModal(key) {
   document.getElementById('modal-process').textContent = d.process;
   document.getElementById('modal-problem').textContent = d.problem;
   document.getElementById('modal-problem-wrap').style.display = d.status === 'good' ? 'none' : 'block';
+  document.getElementById('modal-intercom').textContent = d.intercom || '';
+  document.getElementById('modal-intercom-wrap').style.display = d.intercom ? 'block' : 'none';
   document.getElementById('overlay').classList.add('open');
 }
 

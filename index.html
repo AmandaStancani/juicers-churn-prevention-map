@@ -9,7 +9,7 @@
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f7f4; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 2rem 1rem; }
   h1 { font-size: 20px; font-weight: 600; color: #1a1a18; margin-bottom: 0.25rem; }
   p.sub { font-size: 14px; color: #6b6b66; margin-bottom: 2rem; }
-  .solar-wrap { width: 100%; max-width: 720px; }
+  .solar-wrap { width: 100%; max-width: 800px; }
   svg { display: block; width: 100%; }
   .planet { cursor: pointer; }
   .planet circle { transition: opacity 0.15s; }
@@ -22,7 +22,7 @@
   .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
   .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 100; align-items: center; justify-content: center; }
   .overlay.open { display: flex; }
-  .modal { background: #fff; border-radius: 14px; border: 1px solid #e0ded6; padding: 1.5rem; max-width: 380px; width: 90%; }
+  .modal { background: #fff; border-radius: 14px; border: 1px solid #e0ded6; padding: 1.5rem; max-width: 400px; width: 90%; }
   .modal h2 { font-size: 16px; font-weight: 600; color: #1a1a18; margin-bottom: 6px; }
   .modal .status-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 12px; font-weight: 500; }
   .modal p { font-size: 13px; color: #555550; line-height: 1.6; margin-bottom: 8px; }
@@ -38,83 +38,152 @@
 
 <div class="solar-wrap">
 <button class="back-btn" id="backBtn" onclick="goBack()">← Back to overview</button>
-<svg viewBox="0 0 680 560">
-  <ellipse class="orbit-ring" cx="340" cy="280" rx="115" ry="115"/>
-  <ellipse class="orbit-ring" cx="340" cy="280" rx="220" ry="190"/>
-  <circle cx="340" cy="280" r="85" fill="#378ADD" opacity="0.15"/>
-  <circle cx="340" cy="280" r="68" fill="#B5D4F4" stroke="#185FA5" stroke-width="1"/>
-  <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#0C447C" text-anchor="middle" x="340" y="270">Churn</text>
-  <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#0C447C" text-anchor="middle" x="340" y="285">Prevention</text>
-  <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#185FA5" text-anchor="middle" x="340" y="300">Goal</text>
+<svg viewBox="0 0 800 640">
+
+  <!-- Orbit rings -->
+  <ellipse class="orbit-ring" cx="400" cy="320" rx="120" ry="120"/>
+  <ellipse class="orbit-ring" cx="400" cy="320" rx="240" ry="210"/>
+
+  <!-- Center -->
+  <circle cx="400" cy="320" r="88" fill="#378ADD" opacity="0.15"/>
+  <circle cx="400" cy="320" r="70" fill="#B5D4F4" stroke="#185FA5" stroke-width="1"/>
+  <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#0C447C" text-anchor="middle" x="400" y="310">Churn</text>
+  <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#0C447C" text-anchor="middle" x="400" y="325">Prevention</text>
+  <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#185FA5" text-anchor="middle" x="400" y="340">Goal</text>
 
   <!-- LEVEL 1 -->
   <g id="level1">
-    <g class="planet" onclick="drillDown()" transform="translate(340,165)">
+
+    <!-- Checkins (drills down) -->
+    <g class="planet" onclick="drillDown()" transform="translate(400,200)">
       <circle r="42" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
       <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">Checkins</text>
       <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B45309" text-anchor="middle" y="10">manual</text>
     </g>
-    <g class="planet" onclick="openModal('monitoring')" transform="translate(448,255)">
+
+    <!-- Account monitoring -->
+    <g class="planet" onclick="openModal('monitoring')" transform="translate(510,295)">
       <circle r="42" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
-      <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#92400E" text-anchor="middle" y="-12">Account</text>
-      <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#92400E" text-anchor="middle" y="3">monitoring</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="-12">Account</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="3">monitoring</text>
       <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B45309" text-anchor="middle" y="18">manual</text>
     </g>
-    <g class="planet" onclick="openModal('webinars')" transform="translate(510,130)">
+
+    <!-- Webinars -->
+    <g class="planet" onclick="openModal('webinars')" transform="translate(570,170)">
       <circle r="42" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
       <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-5">Webinars</text>
       <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B91C1C" text-anchor="middle" y="10">not yet</text>
     </g>
-    <g class="planet" onclick="openModal('workshops')" transform="translate(555,300)">
+
+    <!-- Workshops -->
+    <g class="planet" onclick="openModal('workshops')" transform="translate(615,355)">
       <circle r="42" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
       <text font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-5">Workshops</text>
       <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B91C1C" text-anchor="middle" y="10">not yet</text>
     </g>
+
+    <!-- Engagement emails (drills down) -->
+    <g class="planet" onclick="drillDownEngagement()" transform="translate(220,170)">
+      <circle r="42" fill="#F0EFEC" stroke="#9a9990" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#4a4a46" text-anchor="middle" y="-12">Engagement</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#4a4a46" text-anchor="middle" y="3">Emails</text>
+      <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#6b6b66" text-anchor="middle" y="18">limited</text>
+    </g>
+
+    <!-- Churn Analysis Tool -->
+    <g class="planet" onclick="openModal('churnAnalysis')" transform="translate(185,355)">
+      <circle r="42" fill="#F0EFEC" stroke="#9a9990" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#4a4a46" text-anchor="middle" y="-12">Churn</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#4a4a46" text-anchor="middle" y="3">Analysis</text>
+      <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#6b6b66" text-anchor="middle" y="18">paused</text>
+    </g>
+
+    <!-- Reverse Churn Tool -->
+    <g class="planet" onclick="openModal('reverseChurn')" transform="translate(270,470)">
+      <circle r="42" fill="#F0EFEC" stroke="#9a9990" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#4a4a46" text-anchor="middle" y="-12">Reverse</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#4a4a46" text-anchor="middle" y="3">Churn Tool</text>
+      <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#6b6b66" text-anchor="middle" y="18">paused</text>
+    </g>
+
+    <!-- Segmented Emails bottom right -->
+    <g class="planet" onclick="openModal('segmentedEmails')" transform="translate(530,470)">
+      <circle r="42" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-12">Segmented</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="3">Emails</text>
+      <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B91C1C" text-anchor="middle" y="18">not yet</text>
+    </g>
+
   </g>
 
   <!-- LEVEL 2: Checkins drill-down -->
-  <!--
-    HOW TO ADD A NEW CHECKIN TYPE:
-    1. Copy a <g class="planet"> block below
-    2. Change onclick index to match new entry in tasks object
-    3. Change transform="translate(X,Y)" to a free position
-    4. Update the text labels
-  -->
   <g id="level2-checkins" style="display:none">
-    <g class="planet" onclick="openModal('educational')" transform="translate(340,155)">
+    <g class="planet" onclick="openModal('educational')" transform="translate(400,190)">
       <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">Educational</text>
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="8">Call</text>
     </g>
-    <g class="planet" onclick="openModal('onboarding')" transform="translate(455,230)">
+    <g class="planet" onclick="openModal('onboarding')" transform="translate(530,255)">
       <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="4">Onboarding</text>
     </g>
-    <g class="planet" onclick="openModal('monthly')" transform="translate(420,375)">
+    <g class="planet" onclick="openModal('monthly')" transform="translate(500,410)">
       <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">First monthly</text>
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="8">check-in</text>
     </g>
-    <g class="planet" onclick="openModal('quarterly')" transform="translate(240,375)">
+    <g class="planet" onclick="openModal('quarterly')" transform="translate(300,410)">
       <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">Quarterly</text>
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="8">check-in</text>
     </g>
-    <g class="planet" onclick="openModal('monitoring')" transform="translate(225,230)">
+    <g class="planet" onclick="openModal('monitoring')" transform="translate(270,255)">
       <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">Account</text>
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="8">monitoring</text>
     </g>
   </g>
+
+  <!-- LEVEL 2: Engagement Emails drill-down -->
+  <g id="level2-engagement" style="display:none">
+    <g class="planet" onclick="openModal('segmentedEmails')" transform="translate(400,190)">
+      <circle r="38" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-5">Segmented</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="8">by Plan</text>
+    </g>
+    <g class="planet" onclick="openModal('behavioralTriggers')" transform="translate(530,255)">
+      <circle r="38" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-5">Behavioral</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="8">Triggers</text>
+    </g>
+    <g class="planet" onclick="openModal('milestoneEmails')" transform="translate(500,410)">
+      <circle r="38" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-5">Milestone</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="8">Emails</text>
+    </g>
+    <g class="planet" onclick="openModal('reactivationSeq')" transform="translate(300,410)">
+      <circle r="38" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-5">Reactivation</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="8">Sequence</text>
+    </g>
+    <g class="planet" onclick="openModal('feedbackEmail')" transform="translate(270,255)">
+      <circle r="38" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="-5">Feedback</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#92400E" text-anchor="middle" y="8">Reset Email</text>
+    </g>
+  </g>
+
 </svg>
 </div>
 
 <div class="legend">
   <div class="legend-item"><div class="legend-dot" style="background:#D97706;"></div> exists but manual</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#9a9990;"></div> exists but paused</div>
   <div class="legend-item"><div class="legend-dot" style="background:#DC2626;"></div> doesn't exist yet</div>
   <div class="legend-item"><div class="legend-dot" style="background:#16A34A;"></div> works well</div>
 </div>
-<p class="hint" style="text-align:center">Click Checkins to explore each type</p>
+<p class="hint" style="text-align:center">Click Checkins or Engagement Emails to explore each type</p>
 
 <div class="overlay" id="overlay" onclick="closeModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
@@ -131,24 +200,6 @@
 </div>
 
 <script>
-/*
-  HOW TO ADD A NEW PLANET
-  =======================
-  1. Add an entry to the tasks object below:
-     key: { title: "", status: "manual|not yet|good", process: "", problem: "" }
-
-  2. Add a <g class="planet"> block in the SVG
-     - Set onclick="openModal('your-key')"
-     - Set transform="translate(X,Y)"
-     - For status colors:
-       manual  -> fill:#FEF3C7 stroke:#D97706 text:#92400E
-       not yet -> fill:#FEE2E2 stroke:#DC2626 text:#7F1D1D
-       good    -> fill:#DCFCE7 stroke:#16A34A text:#14532D
-
-  FREE OUTER POSITIONS (cx=340,cy=280,rx=220,ry=190):
-    translate(340,90)   translate(130,280)
-    translate(340,470)  translate(200,430)
-*/
 const tasks = {
   educational: {
     title: "Educational Call",
@@ -175,7 +226,7 @@ const tasks = {
     problem: "No automated scheduling. High risk of accounts slipping through without a touchpoint."
   },
   monitoring: {
-    title: "Account health monitoring",
+    title: "Account Health Monitoring",
     status: "manual",
     process: "Daily manual filtering in Intercom using signals: search count, user count, articles published, cname status, plan, KB usage, languages, customizations, Swifty Search/Chat usage.",
     problem: "No automated alerts. Requires opening Intercom every day and applying filters manually to surface at-risk accounts."
@@ -191,19 +242,75 @@ const tasks = {
     status: "not yet",
     process: "Not currently offered.",
     problem: "No workshop program exists yet. Could drive deeper product adoption and reduce churn among at-risk segments."
+  },
+  churnAnalysis: {
+    title: "Churn Analysis Tool",
+    status: "paused",
+    process: "Add an email domain or full email — the AI searches all Intercom conversations, analyzes reported bugs, user sentiment, and delivers an overview of why the account churned. Also analyzes a dedicated inbox where all sales/support emails are forwarded, so the AI can read those conversations too.",
+    problem: "Trial expired — needs to be migrated to a new host. Currently paused. Also, the tool only captures emails from the moment it was set up; historical emails before the tool was installed are not included yet."
+  },
+  reverseChurn: {
+    title: "Reverse Churn Tool",
+    status: "paused",
+    process: "The AI scans all Intercom conversations (and emails when possible) to identify churn signals, then outputs a list of at-risk accounts with a summary of why they might cancel. The list can also be fed into the Churn Analysis Tool for deeper individual review.",
+    problem: "Only captures data from the moment the tool was set up. Historical conversations and emails prior to setup are not yet covered."
+  },
+  segmentedEmails: {
+    title: "Segmented Emails by Plan",
+    status: "not yet",
+    process: "Not yet implemented.",
+    problem: "Currently sending the same updates to everyone. Plan is to segment by plan type and usage behavior (using existing Intercom filters) and send relevant, targeted updates to each group to increase usage and reduce churn."
+  },
+  feedbackEmail: {
+    title: "Feedback Reset Email",
+    status: "manual",
+    process: "Drafted email campaign asking customers: 'What's the most frustrating or limited part of your current setup?' — to be sent manually to all accounts as the first step of the segmentation strategy.",
+    problem: "Not yet sent. Once replies come in, responses will be used to segment and tailor follow-up communications per plan/behavior."
+  },
+  behavioralTriggers: {
+    title: "Behavioral Trigger Emails",
+    status: "not yet",
+    process: "Not yet implemented.",
+    problem: "Opportunity to trigger emails based on behavior signals already available in Intercom: 0 searches, no articles published in 30 days, no customizations, missing cname. Each signal would trigger a targeted email nudge."
+  },
+  milestoneEmails: {
+    title: "Milestone Emails",
+    status: "not yet",
+    process: "Not yet implemented.",
+    problem: "When an account hits a milestone (first article published, cname configured, first Swifty Chat use), an automated email could celebrate it and suggest the next step — driving deeper adoption."
+  },
+  reactivationSeq: {
+    title: "Reactivation Sequence",
+    status: "not yet",
+    process: "Not yet implemented.",
+    problem: "Accounts older than 90 days with low usage have no dedicated re-engagement flow. A sequence of 'you haven't explored X yet' emails could recover inactive accounts before they churn."
   }
 };
+
+let currentDrill = null;
 
 function drillDown() {
   document.getElementById('level1').style.display = 'none';
   document.getElementById('level2-checkins').style.display = 'block';
+  document.getElementById('level2-engagement').style.display = 'none';
   document.getElementById('backBtn').classList.add('visible');
+  currentDrill = 'checkins';
+}
+
+function drillDownEngagement() {
+  document.getElementById('level1').style.display = 'none';
+  document.getElementById('level2-checkins').style.display = 'none';
+  document.getElementById('level2-engagement').style.display = 'block';
+  document.getElementById('backBtn').classList.add('visible');
+  currentDrill = 'engagement';
 }
 
 function goBack() {
   document.getElementById('level1').style.display = 'block';
   document.getElementById('level2-checkins').style.display = 'none';
+  document.getElementById('level2-engagement').style.display = 'none';
   document.getElementById('backBtn').classList.remove('visible');
+  currentDrill = null;
 }
 
 function openModal(key) {
@@ -211,10 +318,12 @@ function openModal(key) {
   if (!d) return;
   const statusColors = {
     'manual':   { bg: '#FEF3C7', color: '#92400E', label: 'Exists — manual' },
+    'paused':   { bg: '#EBEBEA', color: '#4a4a46', label: 'Exists — paused' },
+    'limited':  { bg: '#EBEBEA', color: '#4a4a46', label: 'Exists — paused / limited' },
     'not yet':  { bg: '#FEE2E2', color: '#7F1D1D', label: "Doesn't exist yet" },
     'good':     { bg: '#DCFCE7', color: '#14532D', label: 'Works well' }
   };
-  const s = statusColors[d.status];
+  const s = statusColors[d.status] || statusColors['not yet'];
   document.getElementById('modal-title').textContent = d.title;
   const badge = document.getElementById('modal-badge');
   badge.textContent = s.label;

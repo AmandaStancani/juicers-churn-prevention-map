@@ -38,7 +38,7 @@
 
 <div class="solar-wrap">
 <button class="back-btn" id="backBtn" onclick="goBack()">← Back to overview</button>
-<svg viewBox="0 0 800 640">
+<svg viewBox="0 0 800 680">
 
   <!-- Orbit rings -->
   <ellipse class="orbit-ring" cx="400" cy="320" rx="120" ry="120"/>
@@ -113,6 +113,14 @@
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-12">Segmented</text>
       <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="3">Emails</text>
       <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B91C1C" text-anchor="middle" y="18">not yet</text>
+    </g>
+
+    <!-- Win-back Campaign -->
+    <g class="planet" onclick="openModal('winback')" transform="translate(400,555)">
+      <circle r="42" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="-5">Win-back</text>
+      <text font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#7F1D1D" text-anchor="middle" y="8">Campaign</text>
+      <text font-family="-apple-system,sans-serif" font-size="10" font-weight="400" fill="#B91C1C" text-anchor="middle" y="21">not yet</text>
     </g>
 
   </g>
@@ -284,6 +292,12 @@ const tasks = {
     status: "not yet",
     process: "Not yet implemented.",
     problem: "Accounts older than 90 days with low usage have no dedicated re-engagement flow. A sequence of 'you haven't explored X yet' emails could recover inactive accounts before they churn."
+  },
+  winback: {
+    title: "Win-back Campaign",
+    status: "not yet",
+    process: "Not yet implemented.",
+    problem: "No structured process to re-engage churned accounts after they leave. Customers who churn due to temporary budget constraints or changing priorities are never contacted again — a significant recoverable revenue opportunity at the 60–90 day mark post-cancellation."
   }
 };
 
